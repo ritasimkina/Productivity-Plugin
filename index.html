@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css">
+    <link rel="stylesheet" href="libs/vue-datetime.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+
+</head>
+<body>
+<div class="wrapper">
+    <div class="schedule" id="schedule">
+        <div class="js-time">
+            <div class="swiper-wrapper timeline flex">
+                <div class="swiper-slide flex" v-for="(week, weekIndex) in timeline">
+                <div v-for="(day, dayIndex) in week">
+                    <div class="marker-list">
+                        <div
+                            v-if="day.markers.length"
+                            v-for="(marker, markerIndex) in day.markers"
+                             @click="hover(weekIndex, dayIndex, markerIndex)"
+                             :class="[
+                            marker.type === 'Exam' || marker.type === 'Deadline' ? 'marker--down' : '',
+                            marker.visibility === true ? '':'marker--hidden',
+                            marker.hover === true ? 'marker--hover':''
+                            ]">
+                            <div :class="'marker marker--'+ marker.type">
+                                <div class="marker__name">{{ marker.name }}</div>
+                                <div class="marker__time">{{ formatted(marker.date, 'time') }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline__date">{{ formatted(day.date, 'date') }}</div>
+                </div>
+            </div>
+            </div>
+            <div class="swiper-button swiper-button-prev" @click="weekPrev"></div>
+            <div class="swiper-button swiper-button-next" @click="weekNext"></div>
+        </div>
+        <div class="nav flex">
+            <div class="my-task" :class="{ active: addTask }" @click="toggleAddTask">
+                <div>ADD</div>
+            </div>
+            <div class="filters flex">
+                <div v-for="(filter, index) in filters">
+                    <div class="filter flex" :class="filter.visibility?'active':''" @click="filterMarkers(filter.type)">
+                        <div class="filter__color" v-if="filter.color !== '' ? true : false" :style="'background-color: ' + filter.color"></div>
+                        <div class="filter__name">{{ filter.name }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tasks--wrap flex">
+            <div class="add-tasks" v-if="addTask">
+                <input class="select" type="text" v-model="addTaskName" placeholder="Task name">
+                <datetime
+                        type="datetime"
+                        v-model="addTaskSelectDate"
+                        placeholder="Select day and time"
+                        value-zone="UTC+3"
+                        :format="{ year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                        :phrases="{ok: 'Continue', cancel: 'Exit'}"
+                ></datetime>
+                <input class="select" type="text" v-model="addTaskMessage" placeholder="Notes">
+                <button class="add-tasks-button" @click="addMyTask">Add</button>
+            </div>
+            <table class="tasks">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Date/Time</th>
+                    <th>Place/Description</th>
+                    <th>Links</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <template v-for="(day, dayIndex) in timeline[currentWeek]" >
+                        <tr v-for="(row, rowIndex) in day.markers"
+                            @click="hover(currentWeek, dayIndex, rowIndex)"
+                            :class="[
+                            row.visibility === true ? '':'row--hidden',
+                            row.hover === true ? 'row--hover':'',
+                        ]">
+                            <td><div class="filter__color" :style="'background-color:'+ row.color"></div></td>
+                            <td>{{ row.name }}</td>
+                            <td>{{ row.type }}</td>
+                            <td>{{ formatted(row.date, 'date') }} / {{ formatted(row.date, 'time') }}</td>
+                            <td>{{ row.place }}</td>
+                            <td>
+                                <div class="links-group flex">
+                                    <a :href="row.links.link1" target="_blank">
+                                        <img src="img/module.png" alt="">
+                                    </a>
+                                    <a :href="row.links.link2" target="_blank">
+                                        <img src="img/u.png" alt="">
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
+<script type="text/javascript" src="libs/luxon.min.js"></script>
+<script type="text/javascript" src="libs/vue-datetime.min.js"></script>
+<script type="text/javascript" src="js/style.js"></script>
+</body>
+</html>

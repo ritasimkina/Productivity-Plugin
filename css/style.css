@@ -1,0 +1,597 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+*:before,
+*:after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  min-height: 100%;
+  height: 100%;
+}
+
+body {
+  font: 400 16px/1 Arial;
+  min-width: 320px;
+  position: relative;
+  overflow-x: hidden;
+  min-height: 100%;
+  color: #000;
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  transition: all .3s;
+  display: inline-block;
+  color: #333;
+  text-decoration: none;
+}
+
+a:hover,
+a:active {
+  color: #333;
+}
+
+a.disabled {
+  color: #333;
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+a,
+input,
+button,
+textarea,
+select {
+  outline: none;
+  border: none;
+  -webkit-appearance: none;
+}
+
+a:focus,
+input:focus,
+button:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+input[type="number"] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+input:focus::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  transition: all .3s;
+  color: transparent !important;
+}
+
+input:focus::-moz-placeholder {
+  /* Firefox 19+ */
+  transition: all .3s;
+  color: transparent !important;
+}
+
+input:focus:-ms-input-placeholder {
+  /* IE 10+ */
+  transition: all .3s;
+  color: transparent !important;
+}
+
+input:focus:-moz-placeholder {
+  /* Firefox 18- */
+  transition: all .3s;
+  color: transparent !important;
+}
+
+[data-svg] {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.svg {
+  display: inline-block;
+  transition: all .3s;
+  height: 20px;
+  width: 20px;
+}
+
+.flex {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.wrapper {
+  position: relative;
+  flex: 1 0;
+  background-color: #f7f7f7;
+}
+
+main.content {
+  position: relative;
+  display: block;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+.schedule {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.js-time {
+  padding: 180px 0;
+  position: relative;
+}
+
+.js-time .swiper-button {
+  margin: 20px 30px;
+  top: 255px;
+}
+
+.timeline {
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  flex-flow: row nowrap;
+  height: 5px;
+  z-index: 15;
+  position: relative;
+}
+
+.timeline > div {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.timeline > div > div {
+  position: relative;
+  display: flex;
+  flex: 1 0;
+  background-color: #069;
+}
+
+.timeline > div > div::before {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  content: '';
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #069;
+  margin-top: -5px;
+}
+
+.timeline > div > div:last-child::after {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  content: '';
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #069;
+  margin-top: -5px;
+}
+
+.timeline__date {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  text-align: center;
+  margin-top: 3px;
+  font-size: 12px;
+  z-index: 1;
+}
+
+.marker-list {
+  width: 100%;
+  flex: 0 0 100%;
+  display: flex;
+  height: 5px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.marker-list > div {
+  cursor: pointer;
+}
+
+.marker-list > div:nth-child(even) .marker {
+  margin: 0 0 40px;
+}
+
+.marker-list > div:nth-child(even) .marker::before {
+  height: 40px;
+}
+
+.marker-list > div:hover,
+.marker-list > div.marker--hover {
+  z-index: 10;
+}
+
+.marker-list > div:hover .marker,
+.marker-list > div.marker--hover .marker {
+  margin: 0 -35px 70px;
+  width: 100px;
+  flex: 0 0 100px;
+  height: 100px;
+}
+
+.marker-list > div:hover .marker::before,
+.marker-list > div.marker--hover .marker::before {
+  height: 70px;
+}
+
+.marker-list > div:hover .marker__name,
+.marker-list > div.marker--hover .marker__name {
+  font-size: 20px;
+  font-weight: 700;
+  border-bottom-color: inherit;
+}
+
+.marker-list > div:hover .marker__time,
+.marker-list > div.marker--hover .marker__time {
+  max-height: 40px;
+  font-size: 22px;
+  opacity: 1;
+}
+
+.marker-list > div:hover.marker--down .marker__name,
+.marker-list > div.marker--hover.marker--down .marker__name {
+  border-top-color: inherit;
+  border-bottom-color: transparent;
+}
+
+.marker {
+  width: 35px;
+  flex: 0 0 35px;
+  margin: 0 -3px 15px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+  height: 35px;
+  background-color: transparent;
+  border-radius: 50%;
+  position: relative;
+  line-height: 1.4;
+  transition: all .4s;
+  color: #fff;
+}
+
+.marker::before {
+  content: '';
+  transition: .4s;
+  position: absolute;
+  display: block;
+  width: 2px;
+  left: 50%;
+  margin: 0 0 0 -1px;
+  height: 15px;
+  top: 100%;
+  background-color: transparent;
+}
+
+.marker--Deadline {
+  background: #9fa8da;
+}
+
+.marker--Deadline::before {
+  background-color: #9fa8da;
+}
+
+.marker--Exam {
+  background: #3f51b5;
+}
+
+.marker--Exam::before {
+  background-color: #3f51b5;
+}
+
+.marker--Practice {
+  background: #64b5f6;
+}
+
+.marker--Practice::before {
+  background-color: #29b6f6;
+}
+
+.marker--Lecture {
+  background: #90a4ae;
+}
+
+.marker--Lecture::before {
+  background-color: #90a4ae;
+}
+
+.marker--my {
+  background: #bbdefb;
+}
+
+.marker--my::before {
+  background-color: #bbdefb;
+}
+
+.marker--down {
+  transform: rotate(-180deg) translateY(-100%);
+}
+
+.marker--down .marker__name,
+.marker--down .marker__time {
+  transform: rotate(-180deg);
+}
+
+.marker--hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.marker__name {
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 400;
+  white-space: nowrap;
+  transition: all .4s;
+  border: 1px solid transparent;
+}
+
+.marker__time {
+  position: relative;
+  transition: all .4s;
+  overflow: hidden;
+  opacity: 0;
+  font-weight: 700;
+  max-height: 0;
+}
+
+.nav {
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.filters {
+  align-items: center;
+}
+
+.filters > div {
+  margin-left: 30px;
+}
+
+.filter {
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all .4s;
+  padding: 5px 0;
+}
+
+.filter__color {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.filter__name {
+  font-weight: 700;
+}
+
+.filter.active,
+.filter:hover {
+  border-color: #069;
+}
+
+.my-task {
+  font-size: 18px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background-color: #069;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+}
+
+.my-task::after {
+  content: '+';
+  margin-left: 3px;
+}
+
+.my-task::before {
+  content: '';
+  transition: .4s;
+  position: absolute;
+  display: block;
+  width: 1px;
+  left: 50%;
+  top: 100%;
+  height: 0;
+  background-color: #ced4da;
+}
+
+.my-task.active::before {
+  height: 20px;
+}
+
+.add-tasks {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: .25rem;
+  width: 320px;
+  margin-right: 30px;
+  padding: 20px;
+}
+
+.select,
+.vdatetime-input {
+  margin-bottom: 20px;
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #f7f7f7;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+}
+
+.add-tasks-button {
+  color: #fff;
+  background-color: #069;
+  display: block;
+  font-weight: 400;
+  margin: 0 auto;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid #069;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  max-width: 150px;
+  width: 100%;
+}
+
+.tasks {
+  flex: 1 0;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.tasks--wrap {
+  align-items: flex-start;
+}
+
+.tasks td,
+.tasks th {
+  padding: 10px;
+  vertical-align: middle;
+  border-top: 1px solid #dee2e6;
+  max-width: 200px;
+  line-height: 1.2;
+}
+
+.tasks td:nth-child(5),
+.tasks th:nth-child(5) {
+  text-align: left;
+}
+
+.tasks td:last-child,
+.tasks th:last-child {
+  border-left: 1px solid #dee2e6;
+}
+
+.tasks thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.tasks thead th:first-child {
+  width: 40px;
+}
+
+.tasks tbody tr {
+  transition: all .3s;
+  cursor: pointer;
+}
+
+.tasks tbody tr:hover,
+.tasks tbody tr.row--hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.tasks .filter__type {
+  margin-right: 0;
+}
+
+.tasks .row--hidden {
+  display: none;
+}
+
+.links-group {
+  align-items: center;
+  justify-content: space-around;
+}
+
+.links-group a {
+  display: block;
+  opacity: .7;
+  transition: all .3s;
+}
+
+.links-group a:hover {
+  opacity: 1;
+}
+
+.links-group a > img {
+  display: block;
+  width: 100%;
+}
+
+.links-group a:nth-child(1) {
+  width: 20px;
+  height: 20px;
+}
+
+.links-group a:nth-child(2) {
+  width: 22px;
+  height: 22px;
+}
